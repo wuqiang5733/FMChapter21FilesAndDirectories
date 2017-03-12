@@ -16,14 +16,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let manager = FileManager.default
         let documents = manager.urls(for: .documentDirectory, in: .userDomainMask)
         let docURL = documents.first!
-        
-        let newDirectoryURL = docURL.appendingPathComponent("myfiles")
-        let path = newDirectoryURL.path
-        do {
-            try manager.createDirectory(atPath: path, withIntermediateDirectories: false, attributes: nil)
-        } catch {
-            print("The directory already exists")
-        }
+        listItems(directory: docURL)
         return true
+    }
+    func listItems(directory: URL) {
+        let manager = FileManager.default
+        if let list = try? manager.contentsOfDirectory(atPath: directory.path) {
+            if list.isEmpty {
+                print("The directory is empty")
+            } else {
+                for item in list {
+                    print(item)
+                }
+            }
+        }
     }
 }
