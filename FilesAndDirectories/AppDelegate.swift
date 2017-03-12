@@ -16,19 +16,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let manager = FileManager.default
         let documents = manager.urls(for: .documentDirectory, in: .userDomainMask)
         let docURL = documents.first!
-        listItems(directory: docURL)
-        return true
-    }
-    func listItems(directory: URL) {
-        let manager = FileManager.default
-        if let list = try? manager.contentsOfDirectory(atPath: directory.path) {
-            if list.isEmpty {
-                print("The directory is empty")
-            } else {
-                for item in list {
-                    print(item)
-                }
-            }
+        
+        let newFileURL = docURL.appendingPathComponent("myfiles/anotherfile.txt")
+        let path = newFileURL.path
+        let created = manager.createFile(atPath: path, contents: nil, attributes: nil)
+        if !created {
+            print("We couldn't create the file")
         }
+        return true
     }
 }
