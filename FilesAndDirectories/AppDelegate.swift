@@ -17,12 +17,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let documents = manager.urls(for: .documentDirectory, in: .userDomainMask)
         let docURL = documents.first!
         
-        let fileURL = docURL.appendingPathComponent("anotherfile.txt")
-        let path = fileURL.path
-        do {
-            try manager.removeItem(atPath: path)
-        } catch {
-            print("File was not removed")
+        let fileURL = docURL.appendingPathComponent("myfiles/mytext.txt")
+        let filePath = fileURL.path
+        if let attributes = try? manager.attributesOfItem(atPath: filePath) {
+            let type = attributes[.type] as! FileAttributeType
+            let size = attributes[.size] as! Int
+            let date = attributes[.creationDate] as! Date
+            if type != FileAttributeType.typeDirectory {
+                print("Name: \(fileURL.lastPathComponent)")
+                print("Size: \(size)")
+                print("Created: \(date)")
+            }
         }
         return true
     }
