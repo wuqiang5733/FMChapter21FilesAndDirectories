@@ -17,11 +17,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let documents = manager.urls(for: .documentDirectory, in: .userDomainMask)
         let docURL = documents.first!
         
-        let newFileURL = docURL.appendingPathComponent("myfiles/anotherfile.txt")
-        let path = newFileURL.path
-        let created = manager.createFile(atPath: path, contents: nil, attributes: nil)
-        if !created {
-            print("We couldn't create the file")
+        let originURL = docURL.appendingPathComponent("mytext.txt")
+        let destinationURL = docURL.appendingPathComponent("myfiles/mytext.txt")
+        let originPath = originURL.path
+        let destinationPath = destinationURL.path
+        do {
+            try manager.moveItem(atPath: originPath, toPath: destinationPath)
+        } catch {
+            print("File was not moved")
         }
         return true
     }
