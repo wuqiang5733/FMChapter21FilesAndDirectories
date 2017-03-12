@@ -17,9 +17,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let documents = manager.urls(for: .documentDirectory, in: .userDomainMask)
         let docURL = documents.first!
         
-        let newFileURL = docURL.appendingPathComponent("mytext.txt")
-        let path = newFileURL.path
-        manager.createFile(atPath: path, contents: nil, attributes: nil)
+        let newDirectoryURL = docURL.appendingPathComponent("myfiles")
+        let path = newDirectoryURL.path
+        do {
+            try manager.createDirectory(atPath: path, withIntermediateDirectories: false, attributes: nil)
+        } catch {
+            print("The directory already exists")
+        }
         return true
     }
 }
