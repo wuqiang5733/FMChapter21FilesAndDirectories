@@ -17,14 +17,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let documents = manager.urls(for: .documentDirectory, in: .userDomainMask)
         let docURL = documents.first!
         
-        let originURL = docURL.appendingPathComponent("myfiles/anotherfile.txt")
-        let destinationURL = docURL.appendingPathComponent("anotherfile.txt")
-        let originPath = originURL.path
-        let destinationPath = destinationURL.path
+        let fileURL = docURL.appendingPathComponent("anotherfile.txt")
+        let path = fileURL.path
         do {
-            try manager.copyItem(atPath: originPath, toPath: destinationPath)
+            try manager.removeItem(atPath: path)
         } catch {
-            print("File was not copied")
+            print("File was not removed")
         }
         return true
     }
